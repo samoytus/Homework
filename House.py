@@ -40,7 +40,7 @@ class House:
         self._price = price
 
     def final_price(self, discount: float):
-        final.price = self._price * (100 - discount) / 100
+        final_price = self._price * (100 - discount) / 100
         print(f'Final price: {final_price}')
         return final_price
 
@@ -58,10 +58,9 @@ person = Human('John', 28)
 person.info()
 
 small_house = SmallHouse(600)
-
 person.buy_house(small_house, 10)
 
-person.earn_money(500)
+person.earn_money(5000)
 person.buy_house(small_house, 10)
 
 person.earn_money(5000)
