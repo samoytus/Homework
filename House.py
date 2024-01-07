@@ -9,30 +9,32 @@ class Human:
         self.__house = None
 
     def info(self):
-        print(f'\nName: {self.name}, '
-              f'\nAge: {self.age}, '
-              f'\nHouse: {self.__house}, '
+        print(f'\nName: {self.name} '
+              f'\nAge: {self.age} '
+              f'\nHouse: {self.__house} '
               f'\nMoney: {self.__money}')
 
     @staticmethod
     def default_info():
-        print(f'\nDefault Name: {Human.default_name}, '
+        print(f'\nDefault Name: {Human.default_name} '
               f'\nDefault Age: {Human.default_age}')
 
-    def make_deal(self, house: 'House', price: int | float) -> None:
+    def __make_deal(self, house: 'House', price: int | float) -> None:
         # реализация покупки дома
         self.__money -= price
         self.__house = house
 
     def earn_money(self, amount: int | float) -> None:
         self.__money += amount
+        print(f'Earned {amount} money! Current value: {self.__money}')
 
     def buy_house(self, house: 'House', discount: float) -> None:
-        house_price: float = house.final_price(discount)
+        price: float = house.final_price(discount)
 
-        if self.__money < house_price:
-            raise ValueError('Недостаточно денег')
-        self.__money -= house_price
+        if self.__money >= price:
+            self.__make_deal(house, price)
+        else:
+            print('Не достаточно денег')
 
 class House:
     def __init__(self, area: str , price: int | float):
@@ -46,26 +48,24 @@ class House:
 
 
 class SmallHouse(House):
-    def __init__(self, small_area='40m2', small_price=500):
-        self.area = small_area
-        self.price = small_price
-        super().__init__(area=small_area, price=small_price)
+
+    default_area = 40
+    def __init__(self, price):
+        super().__init__(SmallHouse.default_area, price)
+
+    def __str__(self):
+        return f"House: area={self._area}, price={self._price}"
+
 
 
 # Пример использования классов Human, House и SmallHouse
 Human.default_info()
-person = Human('John', 28)
-person.info()
-
-small_house = SmallHouse(600)
-person.buy_house(small_house, 10)
-
-person.earn_money(5000)
-person.buy_house(small_house, 10)
-
-person.earn_money(5000)
-person.buy_house(small_house, 10)
-person.info()
-# person.earn_money(700)
-# person.buy_house(small_house, 100)
-# person.info()
+h_1 = Human('Andrey', 28)
+h_1.info()
+small_house = SmallHouse(8500)
+h_1.buy_house(small_house, 10)
+h_1.earn_money(5000)
+h_1.buy_house(small_house, 10)
+h_1.earn_money(10000)
+h_1.buy_house(small_house, 10)
+h_1.info()
