@@ -1,7 +1,9 @@
+# 1. Укажите аннотации типов для всех идентификаторов
 class Human:
     default_name = 'No name'
     default_age = 0
 
+    # Отлично!
     def __init__(self, name: str = default_name, age: int = default_age):
         self.name = name
         self.age = age
@@ -20,7 +22,13 @@ class Human:
               f'\nDefault Age: {Human.default_age}')
 
     def __make_deal(self, house: 'House', price: int | float) -> None:
-        # реализация покупки дома
+        # Документация для методов (функций) указывается следующим образом.
+        """
+        Реализация покупки дома.
+        :param house: Объект дома.
+        :param price: Цена дома.
+        :return: None.
+        """
         self.__money -= price
         self.__house = house
 
@@ -36,26 +44,29 @@ class Human:
         else:
             print('Не достаточно денег')
 
+
 class House:
-    def __init__(self, area: str , price: int | float):
+    def __init__(self, area: str, price: int | float):
         self._area = area
         self._price = price
 
     def final_price(self, discount: float):
+        # 2. Ошибка: Название метода и переменной совпадают,
+        # лучше избегайте этого.
         final_price = self._price * (100 - discount) / 100
-        print(f'Final price: {final_price}')
-        return final_price
+        print(f'Final price: {final_price}')  # 3. Это лишний вывод
+        return final_price  # 4. Можно сразу вернуть, не создавая переменную
 
 
 class SmallHouse(House):
-
+    # 5. В ТЗ написано, что передается в параметр родительского конструктора
     default_area = 40
+
     def __init__(self, price):
         super().__init__(SmallHouse.default_area, price)
 
     def __str__(self):
         return f"House: area={self._area}, price={self._price}"
-
 
 
 # Пример использования классов Human, House и SmallHouse
